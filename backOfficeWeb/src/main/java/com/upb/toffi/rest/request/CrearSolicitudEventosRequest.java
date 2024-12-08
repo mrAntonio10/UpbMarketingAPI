@@ -1,4 +1,4 @@
-package com.upb.toffi.rest.request.artes;
+package com.upb.toffi.rest.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,15 +9,16 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CrearSolicitudVideosRequest {
+public class CrearSolicitudEventosRequest {
     //detalleSolicitud
+    private String informacion;
     private String area;
+    private String titulo;
     private LocalDateTime fechaEntrega;
-    private String tipoPost;
+    private String ubicacion;
     private String informacionAdicional;
 
     //solicitud
-    private String fechasTentativasString;
     private String nombreSolicitud;
 
 }

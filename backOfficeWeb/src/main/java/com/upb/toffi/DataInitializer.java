@@ -96,6 +96,21 @@ public class DataInitializer implements CommandLineRunner {
         } else {
             System.out.println("Usuario ROOT ya existe.");
         }
+
+        if (!userRepository.findByEmailAndStateActive("user@gmail.com").isPresent()) {
+            User user = new User();
+            user.setName("USER");
+            user.setLastname("Usuario");
+            user.setEmail("user@gmail.com");
+            user.setPassword(passwordEncoder.encode("user"));
+            user.setState("ACTIVE");
+            user.setRol(rolStudent);
+            userRepository.save(user);
+
+            System.out.println("Usuario USER creado.");
+        } else {
+            System.out.println("Usuario USER ya existe.");
+        }
     }
 
     private void crearTiposEventos() {
@@ -129,7 +144,7 @@ public class DataInitializer implements CommandLineRunner {
         if(!this.tipoSolicitudRepository.findTipoSolicitudByName("%PODCAST%").isPresent()) {
             TipoSolicitud tsPodcast = TipoSolicitud.builder()
                     .state(true)
-                    .nombre("Podcst")
+                    .nombre("Podcast")
                     .build();
 
             this.tipoSolicitudRepository.save(tsPodcast);

@@ -1,5 +1,6 @@
 package com.upb.models.solicitud;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.upb.models.detalle_solicitud.DetalleSolicitud;
 import com.upb.models.tipo_solicitud.TipoSolicitud;
 import com.upb.models.user.User;
@@ -24,14 +25,17 @@ public class Solicitud implements Serializable {
     @UuidGenerator
     private String id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ID_TIPO_SOLICITUD", referencedColumnName = "ID")
     private TipoSolicitud tipoSolicitud;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ID_DETALLE_SOLICITUD", referencedColumnName = "ID")
     private DetalleSolicitud detalleSolicitud;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ID_USUARIO", referencedColumnName = "ID")
     private User usuarioSolicitante;
@@ -41,5 +45,8 @@ public class Solicitud implements Serializable {
 
     @Column(name = "FECHAS_TENTATIVAS")
     private String fechasTentativasString;
+
+    @Column(name = "FECHA_GENERACION")
+    private Long fecha;
 
 }

@@ -66,4 +66,46 @@ public class DetalleSolicitudServiceImpl implements DetalleSolicitudService {
 
         return dVideo;
     }
+
+    @Override
+    public DetalleSolicitud crearDetalleSolicitudEvento(LocalDateTime fechaEntrega, String informacion, String area, String titulo, String informacionAdicional, String ubicacion) {
+        StringUtilMod.notNullStringMaxLength(area, 30, "Área");
+        StringUtilMod.notNullStringMaxLength(titulo, 120, "Título");
+        StringUtilMod.notNullStringMaxLength(ubicacion, 255, "Ubición");
+        StringUtilMod.notNullStringMaxLength(informacion, 180, "Informacion");
+        StringUtilMod.notNullStringMaxLength(informacionAdicional, 180, "Información adicional");
+
+        Long start = fechaEntrega.atZone(ZoneId.of("America/La_Paz")).toInstant().toEpochMilli();
+
+        DetalleSolicitud dArte = DetalleSolicitud.builder()
+                .area(area)
+                .titulo(titulo)
+                .ubicacion(ubicacion)
+                .informacion(informacion)
+                .informacionAdicional(informacionAdicional)
+                .fecha(start)
+                .build();
+
+        detalleSolicitudRepository.save(dArte);
+
+        return dArte;
+    }
+
+    @Override
+    public DetalleSolicitud crearDetalleSolicitudPodcast(LocalDateTime fechaEntrega, String informacion, String informacionAdicional) {
+        StringUtilMod.notNullStringMaxLength(informacion, 180, "Informacion");
+        StringUtilMod.notNullStringMaxLength(informacionAdicional, 180, "Información adicional");
+
+        Long start = fechaEntrega.atZone(ZoneId.of("America/La_Paz")).toInstant().toEpochMilli();
+
+        DetalleSolicitud dPodcast = DetalleSolicitud.builder()
+                .informacion(informacion)
+                .informacionAdicional(informacionAdicional)
+                .fecha(start)
+                .build();
+
+        detalleSolicitudRepository.save(dPodcast);
+
+        return dPodcast;
+    }
 }
