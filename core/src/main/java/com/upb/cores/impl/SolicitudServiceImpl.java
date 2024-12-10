@@ -202,5 +202,28 @@ public class SolicitudServiceImpl implements SolicitudService {
 
     }
 
+    @Override
+    public List<CharInfoDto> getUserCharInfo() {
+        Long fechaActual = LocalDateTime.now(ZoneId.of("America/La_Paz")).atZone(ZoneId.of("America/La_Paz")).toInstant().toEpochMilli();
+
+        Long fechaAtras = LocalDateTime.now(ZoneId.of("America/La_Paz")).atZone(ZoneId.of("America/La_Paz")).minusDays(14).toInstant().toEpochMilli();
+
+        return solicitudRepository.getSolictudForCharInfo(fechaActual, fechaAtras).stream()
+                .collect(Collectors.groupingBy(SolicitudDto::getNombreSolicitud,
+                        Collectors.collectingAndThen(Collectors.toList(),
+                                list -> {
+                                    String tipoSolicitud = list.get(0).getNombreSolicitud();
+
+                                    int cantidad = list.size();
+
+                                    return new CharInfoDto(tipoSolicitud, cantidad);
+                                }
+                        )
+                ))
+                .values()
+                .stream()
+                .toList();
+    }
+
 
 }

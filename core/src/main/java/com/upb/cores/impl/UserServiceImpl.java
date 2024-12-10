@@ -56,17 +56,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<UserDto> getUserPageableByBranchOffice(String name, String idBranchOffice, Authentication authentication,Pageable pageable) {
+    public Page<UserDto> getUserPageableByBranchOffice(String name, Authentication authentication,Pageable pageable) {
         name = (!StringUtil.isNullOrEmpty(name) ?  "%" +name.toUpperCase()+ "%" : null);
-        idBranchOffice = (!StringUtil.isNullOrEmpty(idBranchOffice) ?  idBranchOffice : null);
+
 
         User user = (User) authentication.getPrincipal();
 
         if(!user.getRol().getName().equals("ROOT")) {
-            log.info("PAGINACION DE NORMAL {}, {}", name, idBranchOffice);
+            log.info("PAGINACION DE NORMAL {}", name );
             return null;
         } else {
-            log.info("PAGINACION DE ROOT {}, {}", name, idBranchOffice);
+            log.info("PAGINACION DE ROOT {}", name);
             return null;
         }
     }
@@ -80,13 +80,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto createUser(String name, String lastname, String password, String phoneNumber, String email, String idRol, String idBranchOffice) {
+    public UserDto createUser(String name, String lastname, String password, String phoneNumber, String email, String idRol) {
         StringUtilMod.notNullStringMaxLength(name, 60, "Nombre");
         StringUtilMod.notNullStringMaxLength(lastname, 60, "apellido");
         StringUtilMod.notNullStringMaxLength(password, 60, "Contraseña");
         StringUtilMod.notNullEmailMatcher(email, "Email");
-
-        StringUtilMod.canBeNull_NumberMatcherMaxLength(phoneNumber, 20, "Número telefónico");
 
         Rol rol = rolService.getRolById(idRol);
 
@@ -105,14 +103,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto updateUser(String id, String name, String lastname, String password, String phoneNumber, String email, String idRol, String state, String idBranchOffice) {
+    public UserDto updateUser(String id, String name, String lastname, String password, String phoneNumber, String email, String idRol, String state) {
         StringUtilMod.notNullStringMaxLength(name, 60, "Nombre");
         StringUtilMod.notNullStringMaxLength(lastname, 60, "apellido");
         StringUtilMod.canBeNull_StringMaxLength(password, 60, "Contraseña");
         StringUtilMod.notNullEmailMatcher(email, "Email");
         StringUtilMod.throwStringIsNullOrEmpty(state, "Estado");
 
-        StringUtilMod.canBeNull_NumberMatcherMaxLength(phoneNumber, 20, "Número telefónico");
 
         Rol rol = rolService.getRolById(idRol);
 

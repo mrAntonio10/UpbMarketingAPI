@@ -60,7 +60,7 @@ public class UserController {
             PageRequest pageable = PageRequest.of(page, pageSize, Sort.Direction.fromString(sortDir), sortBy);
 
             return ok(GenericResponse.success(HttpStatus.OK.value(), new PagedModel<>(
-                    (this.userService.getUserPageableByBranchOffice(filterByName, idBranchOffice, authentication, pageable))))
+                    (this.userService.getUserPageableByBranchOffice(filterByName, authentication, pageable))))
             );
         } catch (NullPointerException e) {
             log.error("Error {}, causa {}", e.getMessage(), e.getCause());
@@ -80,7 +80,7 @@ public class UserController {
         try {
             return ok(GenericResponse.success(HttpStatus.OK.value(),
                     userService.createUser(ur.getName(), ur.getLastname(), ur.getPassword(),ur.getPhoneNumber(),
-                            ur.getEmail(), ur.getIdRol(), ur.getIdBranchOffice()))
+                            ur.getEmail(), ur.getIdRol()))
             );
         }catch (NoSuchElementException e) {
             log.error("Error {}, causa {}", e.getMessage(), e.getCause());
@@ -105,7 +105,7 @@ public class UserController {
         try {
             return ok(GenericResponse.success(HttpStatus.OK.value(),
                     userService.updateUser(ur.getId(), ur.getName(), ur.getLastname(), ur.getPassword(),ur.getPhoneNumber(),
-                            ur.getEmail(), ur.getIdRol(), ur.getState(), ur.getIdBranchOffice()))
+                            ur.getEmail(), ur.getIdRol(), ur.getState()))
             );
         } catch (NoSuchElementException e) {
             log.error("Error {} ID: {}, causa {}", e.getMessage(), ur.getId(),e.getCause());

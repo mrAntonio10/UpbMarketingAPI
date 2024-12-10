@@ -23,4 +23,5 @@ public interface SolicitudService {
    Page<SolicitudDto> getSolicitudPageable(String tipoSolicitud, Pageable pageable);
    List<Archivo> getArchivosList(String idSolicitud);
    List<CharInfoDto> getCharInfo();
+   List<CharInfoDto> getUserCharInfo();
 }

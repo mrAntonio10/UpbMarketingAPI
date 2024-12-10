@@ -215,4 +215,25 @@ public class SolicitudController {
         }
     }
 
+    @GetMapping("user-char-info")
+    public ResponseEntity<GenericResponse<List<CharInfoDto>>> getUserCharInfo(
+    ) {
+        try {
+
+            return ok(GenericResponse.success(HttpStatus.OK.value(),
+                    (this.solicitudService.getUserCharInfo()))
+            );
+        } catch(NoSuchElementException e) {
+            log.error("Error {}, causa {}", e.getMessage(), e.getCause());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(GenericResponse.error(HttpStatus.NOT_FOUND.value(),
+                            e.getMessage()));
+        } catch (Exception e) {
+            log.error("Error genérico al obtener", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(GenericResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Error en el servidor. Favor contactarse con el administrador."));
+        }
+    }
+
 }
