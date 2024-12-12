@@ -10,6 +10,7 @@ import com.upb.models.detalle_solicitud.DetalleSolicitud;
 import com.upb.models.rol.Rol;
 import com.upb.models.solicitud.Solicitud;
 import com.upb.models.solicitud.dto.CharInfoDto;
+import com.upb.models.solicitud.dto.SolicitudCompleteDto;
 import com.upb.models.solicitud.dto.SolicitudDto;
 import com.upb.models.tipo_solicitud.TipoSolicitud;
 import com.upb.models.user.User;
@@ -223,6 +224,12 @@ public class SolicitudServiceImpl implements SolicitudService {
                 .values()
                 .stream()
                 .toList();
+    }
+
+    @Override
+    public SolicitudCompleteDto getSolicitudById(String idSolicitud) {
+        return solicitudRepository.getSolicitudById(idSolicitud).orElseThrow(() ->
+                new NoSuchElementException("No fue posible recuperar los valores correspondientes a la solicitud"));
     }
 
 

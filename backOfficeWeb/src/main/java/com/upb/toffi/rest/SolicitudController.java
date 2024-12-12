@@ -2,7 +2,9 @@ package com.upb.toffi.rest;
 
 import com.upb.cores.SolicitudService;
 import com.upb.models.archivos.Archivo;
+import com.upb.models.solicitud.Solicitud;
 import com.upb.models.solicitud.dto.CharInfoDto;
+import com.upb.models.solicitud.dto.SolicitudCompleteDto;
 import com.upb.models.solicitud.dto.SolicitudDto;
 import com.upb.models.user.dto.UserDto;
 import com.upb.toffi.config.util.GenericResponse;
@@ -222,6 +224,27 @@ public class SolicitudController {
 
             return ok(GenericResponse.success(HttpStatus.OK.value(),
                     (this.solicitudService.getUserCharInfo()))
+            );
+        } catch(NoSuchElementException e) {
+            log.error("Error {}, causa {}", e.getMessage(), e.getCause());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(GenericResponse.error(HttpStatus.NOT_FOUND.value(),
+                            e.getMessage()));
+        } catch (Exception e) {
+            log.error("Error genérico al obtener", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(GenericResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            "Error en el servidor. Favor contactarse con el administrador."));
+        }
+    }
+
+    @GetMapping("solicitud/{id}")
+    public ResponseEntity<GenericResponse<SolicitudCompleteDto>> getUserCharInfo(@PathVariable("id") String idSolicitud
+    ) {
+        try {
+
+            return ok(GenericResponse.success(HttpStatus.OK.value(),
+                    (this.solicitudService.getSolicitudById(idSolicitud)))
             );
         } catch(NoSuchElementException e) {
             log.error("Error {}, causa {}", e.getMessage(), e.getCause());

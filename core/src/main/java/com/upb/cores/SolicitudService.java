@@ -4,6 +4,7 @@ import com.upb.models.archivos.Archivo;
 import com.upb.models.archivos.dto.Base64DtoRequest;
 import com.upb.models.solicitud.Solicitud;
 import com.upb.models.solicitud.dto.CharInfoDto;
+import com.upb.models.solicitud.dto.SolicitudCompleteDto;
 import com.upb.models.solicitud.dto.SolicitudDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +25,5 @@ public interface SolicitudService {
    List<Archivo> getArchivosList(String idSolicitud);
    List<CharInfoDto> getCharInfo();
    List<CharInfoDto> getUserCharInfo();
+   SolicitudCompleteDto getSolicitudById(String idSolicitud);
 }
